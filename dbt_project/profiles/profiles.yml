@@ -12,12 +12,8 @@ dbt_project:
       threads: 4
 
     ci:
-      type: redshift
-      host: localhost
-      user: fake
-      password: fake
-      port: 5439
-      dbname: dev
+      type: duckdb
+      path: ":memory:"
       schema: analytics
       threads: 1
 
