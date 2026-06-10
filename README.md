@@ -1,4 +1,4 @@
-## Financial Analytics Data Warehouse
+# Financial Analytics Data Warehouse
 An end-to-end data engineering pipeline that ingests financial and macroeconomic data, loads it into Amazon Redshift, transforms it using dbt, and orchestrates workflows with Apache Airflow.
 
 # Overview
