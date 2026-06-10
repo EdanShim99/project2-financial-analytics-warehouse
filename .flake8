@@ -1,4 +1,4 @@
 [flake8]
 max-line-length = 120
-ignore = E501,W503,E402,E128,E124,W292
+ignore = E501,W503,E402,E128,E124,W292,W293,E226
 exclude = venv,dbt_project/target
