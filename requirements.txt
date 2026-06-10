@@ -22,6 +22,7 @@ dbt-redshift==1.10.1
 dbt-semantic-interfaces==0.9.0
 deepdiff==8.6.2
 diff_cover==10.3.0
+flake8==7.3.0
 idna==3.18
 importlib_metadata==8.9.0
 isodate==0.7.2
@@ -34,6 +35,7 @@ leather==0.4.1
 lxml==6.1.1
 MarkupSafe==3.0.3
 mashumaro==3.14
+mccabe==0.7.0
 more-itertools==10.8.0
 msgpack==1.1.2
 networkx==3.6.1
@@ -45,8 +47,10 @@ platformdirs==4.10.0
 pluggy==1.6.0
 protobuf==6.33.6
 psycopg2-binary==2.9.12
+pycodestyle==2.14.0
 pydantic==2.13.4
 pydantic_core==2.46.4
+pyflakes==3.4.0
 Pygments==2.20.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.2

@@ -1,12 +1,12 @@
 # Project 2 Steps
-
-Create S3 Bucket
-# project2-bucket-edan
-Create Redshift Serverless (public accessible ON)
-Get API Keys from Alpha Vantage and FRED
+ 
+# Create S3 Bucket 'project2-bucket-edan'
+# Create Redshift Serverless (public accessible ON)
+# Get API Keys from Alpha Vantage and FRED
 
 mkdir -p project2-financial-analytics-warehouse/{dags,scripts,infra,tests,.github/workflows}
 
+# Set up venv
 python3 -m venv venv
 source venv/bin/activate
 
@@ -22,7 +22,8 @@ Create scripts/extract_econ.py
 Create scripts/create_redshift_tables.py
 Create scripts/load_to_redshift.py
 
-pip install dbt-core dbt-redshift
+# Install project dependencies
+pip install -r requirements.txt
 dbt init dbt_project
 
 mkdir -p dbt_project/models/staging
@@ -63,7 +64,20 @@ docker compose up -d
 docker compose exec -u root airflow-scheduler bash -c "chown -R 50000:0 /opt/airflow/dbt_project"
 docker compose exec airflow-scheduler bash -c "cd /opt/airflow/dbt_project && dbt deps --profiles-dir profiles"
 
-pip install python-dotenv
 python scripts/create_redshift_tables.py
 
 Airflow UI at localhost:8080
+
+# Install dbt packages
+cd dbt_project
+dbt deps
+dbt compile
+cd ..
+
+# Run SQL linting
+sqlfluff lint dbt_project/models/
+
+# Run Python linting
+flake8 scripts/ dags/ --max-line-length=120
+
+# Push changes and verify CI passes
