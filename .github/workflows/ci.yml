@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-validate:
+    runs-on: ubuntu-latest
+
+    env:
+      REDSHIFT_HOST: ${{ secrets.REDSHIFT_HOST }}
+      REDSHIFT_USER: ${{ secrets.REDSHIFT_USER }}
+      REDSHIFT_PASSWORD: ${{ secrets.REDSHIFT_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install flake8 sqlfluff dbt-core dbt-redshift
+
+      - name: Lint Python
+        run: flake8 scripts/ dags/ --max-line-length=120
+
+      - name: Lint SQL
+        run: sqlfluff lint dbt_project/models/ --dialect redshift --ignore parsing
+
+      - name: dbt compile
+        run: |
+          cd dbt_project
+          dbt deps --profiles-dir profiles
+          dbt compile --profiles-dir profiles
