@@ -147,3 +147,4 @@ with DAG(
     )
 
     [extract_stock_data, extract_econ_data] >> load_data >> dbt_seed >> dbt_snapshot >> dbt_run >> dbt_test
+    
