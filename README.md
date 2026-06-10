@@ -12,7 +12,7 @@ This project demonstrates:
 - SQL linting (SQLFluff) and Python linting (flake8)
 
 # Architecture
-APIs -> Python ETL -> Redshift -> dbt -> Airflow -> GitHub Actions (CI)
+![Financial Analytics Warehouse Architecture](assets/architecture.png)
 
 # Tech Stack
 - Python
