@@ -47,5 +47,5 @@ SELECT
     TO_CHAR(date_day, 'Month') AS month_name,
     EXTRACT(DOW FROM date_day) IN (0, 6) AS is_weekend,
     EXTRACT(DOW FROM date_day) NOT IN (0, 6)
-    AS is_trading_day
+        AS is_trading_day
 FROM date_spine

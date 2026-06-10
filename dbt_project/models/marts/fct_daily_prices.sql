@@ -7,7 +7,7 @@
 
 WITH prices AS (
     SELECT *
-    FROM {{ ref('stg_stock_prices') }} AS stg
+    FROM {{ ref('stg_stock_prices') }}
     {% if is_incremental() %}
         WHERE stg.trade_date >= (
             SELECT

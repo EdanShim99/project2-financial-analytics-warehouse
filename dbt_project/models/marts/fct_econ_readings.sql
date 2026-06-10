@@ -7,7 +7,7 @@
 
 WITH indicators AS (
     SELECT *
-    FROM {{ ref('stg_econ_indicators') }} AS stg
+    FROM {{ ref('stg_econ_indicators') }}
     {% if is_incremental() %}
         WHERE stg.observation_date >= (
             SELECT
@@ -33,7 +33,7 @@ calculated AS (
                 PARTITION BY series_id
                 ORDER BY observation_date
             )
-        AS change_from_prev,
+            AS change_from_prev,
         ROUND(
             (observation_value - LAG(
                 observation_value

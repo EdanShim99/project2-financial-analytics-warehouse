@@ -1,9 +1,8 @@
 [sqlfluff]
 dialect = redshift
+templater = dbt
 max_line_length = 80
 
-[sqlfluff:rules:references.qualification]
-enabled = False
-
-[sqlfluff:rules:structure.subquery]
-enabled = False
+[sqlfluff:templater:dbt]
+project_dir = dbt_project
+profiles_dir = ~/.dbt

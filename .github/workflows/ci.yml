@@ -24,16 +24,17 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install flake8 sqlfluff dbt-core dbt-redshift
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Lint Python
         run: flake8 scripts/ dags/ --max-line-length=120
 
+      - name: dbt deps
+        run: dbt deps --project-dir dbt_project --profiles-dir dbt_project/profiles
+
       - name: Lint SQL
-        run: sqlfluff lint dbt_project/models/ --ignore parsing,templating
+        run: sqlfluff lint dbt_project/models/
 
       - name: dbt compile
-        run: |
-          cd dbt_project
-          dbt deps --profiles-dir profiles
-          dbt compile --profiles-dir profiles
+        run: dbt compile --project-dir dbt_project --profiles-dir dbt_project/profiles
