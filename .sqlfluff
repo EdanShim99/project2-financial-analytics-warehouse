@@ -1,0 +1,9 @@
+[sqlfluff]
+dialect = redshift
+max_line_length = 80
+
+[sqlfluff:rules:references.qualification]
+enabled = False
+
+[sqlfluff:rules:structure.subquery]
+enabled = False

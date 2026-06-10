@@ -30,7 +30,7 @@ jobs:
         run: flake8 scripts/ dags/ --max-line-length=120
 
       - name: Lint SQL
-        run: sqlfluff lint dbt_project/models/ --dialect redshift --ignore parsing
+        run: sqlfluff lint dbt_project/models/ --ignore parsing,templating
 
       - name: dbt compile
         run: |

@@ -1,22 +1,25 @@
-with source as (
-    select * from {{ source('staging', 'stock_prices') }}
+WITH source AS (
+    SELECT * FROM {{ source('staging', 'stock_prices') }}
 ),
 
-deduplicated as (
-    select
+deduplicated AS (
+    SELECT
         symbol,
-        date as trade_date,
+        date AS trade_date,
         open_price,
         high_price,
         low_price,
         close_price,
         volume,
         loaded_at,
-        row_number() over (partition by symbol, date order by loaded_at desc) as rn
-    from source
+        ROW_NUMBER() OVER (
+            PARTITION BY symbol, date
+            ORDER BY loaded_at DESC
+        ) AS rn
+    FROM source
 )
 
-select
+SELECT
     symbol,
     trade_date,
     open_price,
@@ -25,5 +28,5 @@ select
     close_price,
     volume,
     loaded_at
-from deduplicated
-where rn = 1
+FROM deduplicated
+WHERE rn = 1

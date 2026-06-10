@@ -1,21 +1,24 @@
-with source as (
-    select * from {{ source('staging', 'econ_indicators') }}
+WITH source AS (
+    SELECT * FROM {{ source('staging', 'econ_indicators') }}
 ),
 
-deduplicated as (
-    select
+deduplicated AS (
+    SELECT
         series_id,
-        date as observation_date,
-        value as observation_value,
+        date AS observation_date,
+        value AS observation_value,
         loaded_at,
-        row_number() over (partition by series_id, date order by loaded_at desc) as rn
-    from source
+        ROW_NUMBER() OVER (
+            PARTITION BY series_id, date
+            ORDER BY loaded_at DESC
+        ) AS rn
+    FROM source
 )
 
-select
+SELECT
     series_id,
     observation_date,
     observation_value,
     loaded_at
-from deduplicated
-where rn = 1
+FROM deduplicated
+WHERE rn = 1
