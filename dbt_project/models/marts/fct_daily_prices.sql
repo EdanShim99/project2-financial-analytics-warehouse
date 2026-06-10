@@ -9,12 +9,13 @@ WITH prices AS (
     SELECT *
     FROM {{ ref('stg_stock_prices') }} AS stg
     {% if is_incremental() %}
-    WHERE stg.trade_date >= (
-        SELECT DATEADD(
-            DAY, -30, MAX(prev.trade_date)
+        WHERE stg.trade_date >= (
+            SELECT
+                DATEADD(
+                    DAY, -30, MAX(prev.trade_date)
+                )
+            FROM {{ this }} AS prev
         )
-        FROM {{ this }} AS prev
-    )
     {% endif %}
 ),
 
@@ -54,8 +55,8 @@ calculated AS (
 
 SELECT * FROM calculated
 {% if is_incremental() %}
-WHERE calculated.trade_date > (
-    SELECT MAX(prev.trade_date)
-    FROM {{ this }} AS prev
-)
+    WHERE calculated.trade_date > (
+        SELECT MAX(prev.trade_date)
+        FROM {{ this }} AS prev
+    )
 {% endif %}

@@ -21,8 +21,7 @@ WITH digits AS (
 ),
 
 numbers AS (
-    SELECT
-        p0.n + p1.n * 10 + p2.n * 100 + p3.n * 1000 AS n
+    SELECT p0.n + p1.n * 10 + p2.n * 100 + p3.n * 1000 AS n
     FROM digits AS p0
     CROSS JOIN digits AS p1
     CROSS JOIN digits AS p2
@@ -33,8 +32,7 @@ numbers AS (
 ),
 
 date_spine AS (
-    SELECT
-        (DATE '2020-01-01' + n)::DATE AS date_day
+    SELECT (DATE '2020-01-01' + n)::DATE AS date_day
     FROM numbers
 )
 
@@ -49,5 +47,5 @@ SELECT
     TO_CHAR(date_day, 'Month') AS month_name,
     EXTRACT(DOW FROM date_day) IN (0, 6) AS is_weekend,
     EXTRACT(DOW FROM date_day) NOT IN (0, 6)
-        AS is_trading_day
+    AS is_trading_day
 FROM date_spine

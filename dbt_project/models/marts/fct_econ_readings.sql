@@ -9,12 +9,13 @@ WITH indicators AS (
     SELECT *
     FROM {{ ref('stg_econ_indicators') }} AS stg
     {% if is_incremental() %}
-    WHERE stg.observation_date >= (
-        SELECT DATEADD(
-            DAY, -7, MAX(prev.observation_date)
+        WHERE stg.observation_date >= (
+            SELECT
+                DATEADD(
+                    DAY, -7, MAX(prev.observation_date)
+                )
+            FROM {{ this }} AS prev
         )
-        FROM {{ this }} AS prev
-    )
     {% endif %}
 ),
 
@@ -31,7 +32,8 @@ calculated AS (
             OVER (
                 PARTITION BY series_id
                 ORDER BY observation_date
-            ) AS change_from_prev,
+            )
+        AS change_from_prev,
         ROUND(
             (observation_value - LAG(
                 observation_value
@@ -52,8 +54,8 @@ calculated AS (
 
 SELECT * FROM calculated
 {% if is_incremental() %}
-WHERE calculated.observation_date > (
-    SELECT MAX(prev.observation_date)
-    FROM {{ this }} AS prev
-)
+    WHERE calculated.observation_date > (
+        SELECT MAX(prev.observation_date)
+        FROM {{ this }} AS prev
+    )
 {% endif %}
