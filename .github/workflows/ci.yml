@@ -37,4 +37,4 @@ jobs:
         run: sqlfluff lint dbt_project/models/
 
       - name: dbt compile
-        run: dbt compile --project-dir dbt_project --profiles-dir dbt_project/profiles
+        run: dbt compile --project-dir dbt_project --profiles-dir dbt_project/profiles --target ci
