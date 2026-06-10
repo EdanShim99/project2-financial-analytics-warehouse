@@ -1,83 +1,31 @@
-# Project 2 Steps
- 
-# Create S3 Bucket 'project2-bucket-edan'
-# Create Redshift Serverless (public accessible ON)
-# Get API Keys from Alpha Vantage and FRED
+## Financial Analytics Data Warehouse
+An end-to-end data engineering pipeline that ingests financial and macroeconomic data, loads it into Amazon Redshift, transforms it using dbt, and orchestrates workflows with Apache Airflow.
 
-mkdir -p project2-financial-analytics-warehouse/{dags,scripts,infra,tests,.github/workflows}
+# Overview
+This project demonstrates:
+- API data extraction (Alpha Vantage, FRED)
+- Data loading into Amazon Redshift Serverless
+- dbt transformations using staging and marts layers
+- Snapshot modeling for historical tracking
+- Dockerized Airflow orchestration
+- Automated CI validation with GitHub Actions
+- SQL linting (SQLFluff) and Python linting (flake8)
 
-# Set up venv
-python3 -m venv venv
-source venv/bin/activate
+# Architecture
+APIs -> Python ETL -> Redshift -> dbt -> Airflow -> GitHub Actions (CI)
 
-Create .gitignore
-Create .env
-Create Dockerfile
-Create docker-compose.yml
+# Tech Stack
+- Python
+- Amazon Redshift Serverless
+- dbt
+- Apache Airflow (Docker)
+- SQLFluff
+- GitHub Actions
 
-mkdir -p logs && sudo chmod -R 777 logs
-
-Create scripts/extract_stocks.py
-Create scripts/extract_econ.py
-Create scripts/create_redshift_tables.py
-Create scripts/load_to_redshift.py
-
-# Install project dependencies
-pip install -r requirements.txt
-dbt init dbt_project
-
-mkdir -p dbt_project/models/staging
-mkdir -p dbt_project/models/marts
-mkdir -p dbt_project/snapshots
-mkdir -p dbt_project/seeds
-mkdir -p dbt_project/profiles
-
-Create models/staging/sources.yml
-Create models/staging/stg_stock_prices.sql
-Create models/staging/stg_econ_indicators.sql
-Create models/staging/schema.yml
-
-Create models/marts/fct_daily_prices.sql
-Create models/marts/fct_econ_readings/sq;
-Create models/marts/dim_time.sql
-Create models/marts/dim_company.sql
-Create models/marts/schema.yml
-
-Create dbt_project/packages.yml
-Create dbt_project/snapshots/snap_company.sql
-Create dbt_proejct/seeds/companies.csv
-Create dbt_project/profiles/profiles.yml
-
-Update dbt_project/dbt_project.yml
-sudo rm -rf dbt_project/models/example/
-
-mkdir -p dags
-mkdir -p dbt_project/dbt_packages dbt_project/logs dbt_project/target
-
-Create dags/full_pipeline_dag.py
-Create scripts/__init__.py
-
-docker compose build
-docker compose up airflow-init
-docker compose up -d
-
-docker compose exec -u root airflow-scheduler bash -c "chown -R 50000:0 /opt/airflow/dbt_project"
-docker compose exec airflow-scheduler bash -c "cd /opt/airflow/dbt_project && dbt deps --profiles-dir profiles"
-
-python scripts/create_redshift_tables.py
-
-Airflow UI at localhost:8080
-
-# Install dbt packages
-cd dbt_project
-dbt deps
-dbt compile
-cd ..
-
-# Run SQL linting
-sqlfluff lint dbt_project/models/
-
-# Run Python linting
-flake8 scripts/ dags/ --max-line-length=120
-
-# Push changes and verify CI passes
+# Continuous Integration
+On every push, GitHub Actions:
+- Installs project dependencies
+- Runs Python linting
+- Runs SQL linting with the dbt templater
+- Compiles the dbt project using a CI target
+This ensures the project builds cleanly and remains reproducible.
