@@ -1,5 +1,6 @@
 dbt_project:
   outputs:
+
     dev:
       type: redshift
       host: "{{ env_var('REDSHIFT_HOST') }}"
@@ -9,4 +10,15 @@ dbt_project:
       dbname: dev
       schema: analytics
       threads: 4
+
+    ci:
+      type: redshift
+      host: localhost
+      user: fake
+      password: fake
+      port: 5439
+      dbname: dev
+      schema: analytics
+      threads: 1
+
   target: dev
