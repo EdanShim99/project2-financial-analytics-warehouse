@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: stg_stock_prices
+    description: "Deduplicated daily stock prices from Alpha Vantage"
+    columns:
+      - name: symbol
+        data_tests:
+          - not_null
+      - name: trade_date
+        data_tests:
+          - not_null
+      - name: close_price
+        data_tests:
+          - not_null
+
+  - name: stg_econ_indicators
+    description: "Deduplicated economic indicator observations from FRED"
+    columns:
+      - name: series_id
+        data_tests:
+          - not_null
+      - name: observation_date
+        data_tests:
+          - not_null
+      - name: observation_value
+        data_tests:
+          - not_null

@@ -1,0 +1,11 @@
+symbol,company_name,sector,industry,market_cap_tier
+AAPL,Apple Inc,Technology,Consumer Electronics,Large Cap
+MSFT,Microsoft Corporation,Technology,Software,Large Cap
+GOOGL,Alphabet Inc,Technology,Internet Services,Large Cap
+JPM,JPMorgan Chase & Co,Financial Services,Banking,Large Cap
+GS,Goldman Sachs Group Inc,Financial Services,Investment Banking,Large Cap
+JNJ,Johnson & Johnson,Healthcare,Pharmaceuticals,Large Cap
+PFE,Pfizer Inc,Healthcare,Pharmaceuticals,Large Cap
+XOM,Exxon Mobil Corporation,Energy,Oil & Gas,Large Cap
+PG,Procter & Gamble Co,Consumer Staples,Household Products,Large Cap
+DIS,Walt Disney Co,Communication Services,Entertainment,Large Cap

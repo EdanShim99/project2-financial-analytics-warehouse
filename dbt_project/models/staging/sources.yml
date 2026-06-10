@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: staging
+    schema: staging
+    tables:
+      - name: stock_prices
+      - name: econ_indicators

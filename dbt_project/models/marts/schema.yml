@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: fct_daily_prices
+    description: "Fact table of daily stock prices with derived metrics"
+    columns:
+      - name: symbol
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['AAPL', 'MSFT', 'GOOGL', 'JPM', 'GS', 'JNJ', 'PFE', 'XOM', 'PG', 'DIS']
+      - name: trade_date
+        data_tests:
+          - not_null
+      - name: daily_return_pct
+        data_tests:
+          - not_null
+
+  - name: fct_econ_readings
+    description: "Fact table of economic indicators with period-over-period changes"
+    columns:
+      - name: series_id
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['UNRATE', 'GDP', 'CPIAUCSL', 'FEDFUNDS', 'T10Y2Y', 'HOUST']
+      - name: observation_date
+        data_tests:
+          - not_null
+
+  - name: dim_company
+    description: "SCD Type 2 company dimension tracking sector and attribute changes"
+    columns:
+      - name: company_key
+        data_tests:
+          - unique
+          - not_null
+      - name: symbol
+        data_tests:
+          - not_null
+
+  - name: dim_time
+    description: "Date dimension covering 2020-2030"
+    columns:
+      - name: date_day
+        data_tests:
+          - unique
+          - not_null
